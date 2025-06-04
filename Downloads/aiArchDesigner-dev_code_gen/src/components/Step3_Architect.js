@@ -497,6 +497,11 @@ ${allDesignContent}
         setCurrentDetailedStep(prev => {
             const nextStep = prev + direction;
             if (nextStep >= 0 && nextStep < detailedArtifactKeys.length) {
+                // 如果是从倒数第二个节点进入最后一个节点(设计文档)
+                if (nextStep === detailedArtifactKeys.length - 1 && direction > 0) {
+                    // 自动触发设计文档的生成
+                    handleInitialAIGenerate('detailed', 'designDocument');
+                }
                 return nextStep;
             }
             return prev;
@@ -650,7 +655,7 @@ ${allDesignContent}
                                 type="primary" 
                                 onClick={handleConfirmStep} 
                                 icon={<CheckOutlined />}
-                                disabled={currentDetailedStep < detailedArtifactKeys.length -1 || (isAIGenerating && isAIGenerating.type === 'detailed')} 
+                                disabled={currentDetailedStep < detailedArtifactKeys.length - 1 || (isAIGenerating && isAIGenerating.type === 'detailed') || !currentDesignData.detailedDesign.designDocument?.content} 
                             >
                                 完成并确认所有技术设计
                             </Button>
@@ -662,7 +667,7 @@ ${allDesignContent}
                             onClick={() => navigateInnerStep('detailed', 1)}
                             disabled={currentDetailedStep >= detailedArtifactKeys.length - 1 || (isAIGenerating && isAIGenerating.type === 'detailed')}
                         >
-                            下一环节
+                            {currentDetailedStep === detailedArtifactKeys.length - 2 ? '生成设计文档' : '下一环节'}
                         </Button>
                     </Space>
                 </TabPane>

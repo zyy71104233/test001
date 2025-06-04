@@ -51,6 +51,7 @@ const initialArchitectDesignData = {
     dbDesign: { content: '', aiAdjustmentRequest: '' },
     apiDocs: { content: '', aiAdjustmentRequest: '' },
     classDiagram: { content: '', aiAdjustmentRequest: '' },
+    designDocument: { content: '', aiAdjustmentRequest: '' },
   },
   isConfirmed: false, // To track if the overall step 3 is confirmed
 };

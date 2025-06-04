@@ -73,6 +73,11 @@ export const mockData = {
         aiAdjustmentRequest: '',
         adjustedContent: '',
 //        adjustedContent: '# 详细设计 - 类图 (AI调整 - 增加事件和领域服务)\n\n```mermaid\nclassDiagram\n    class CertificateRepository { ... }\n    class Certificate { ... }\n    class DomainInfo { ... }\n    class ValidityPeriod { ... }\n    enum CertificateStatus { ... }\n\n    class CertificateService {\n        +uploadCertificate(dto): Certificate\n        +renewCertificate(id, newValidTo): Certificate\n        +revokeCertificate(id): void\n    }\n    CertificateService ..> CertificateRepository : uses\n    CertificateService ..> CertificateDomainEventPublisher : uses\n\n    class CertificateDomainEventPublisher {\n        +publish(event: DomainEvent): void\n    }\n    abstract class DomainEvent {\n        timestamp: Date\n    }\n    class CertificateCreatedEvent extends DomainEvent { certificateId: UUID }\n    class CertificateRenewedEvent extends DomainEvent { certificateId: UUID }\n    class CertificateRevokedEvent extends DomainEvent { certificateId: UUID }\n\n    Certificate "1" *-- "1" DomainInfo\n    Certificate "1" *-- "1" ValidityPeriod\n    Certificate "1" *-- "1" CertificateStatus\n    CertificateRepository ..> Certificate : uses\n```'
+      },
+      designDocument: {
+        content:'',
+        aiAdjustmentRequest: '',
+        adjustedContent: '',
       }
     },
     isConfirmed: false
