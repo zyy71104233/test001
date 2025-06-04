@@ -54,6 +54,7 @@ const HIGH_LEVEL_DESIGN_ARTIFACTS = {
 const highLevelArtifactKeys = Object.keys(HIGH_LEVEL_DESIGN_ARTIFACTS);
 
 const DETAILED_DESIGN_ARTIFACTS = {
+  fileList: '文件列表',
   keySequenceDiagram: '关键时序图',
   stateDiagram: '状态图',
   dbDesign: '库表设计',
@@ -291,11 +292,14 @@ ${allDesignContent}
     );
     
     const designGroup = type === 'highLevel' ? currentDesignData.highLevelDesign : currentDesignData.detailedDesign;
-    const originalContentOnError = designGroup[key].content; 
+    const originalContentOnError = designGroup[key]?.content || ''; 
 
     setIsAIGenerating({ type, key });
     setDesignData(produce(currentDesignData, draft => {
       const groupToUpdate = type === 'highLevel' ? draft.highLevelDesign : draft.detailedDesign;
+      if (!groupToUpdate[key]) {
+        groupToUpdate[key] = { content: '', aiAdjustmentRequest: '' };
+      }
       groupToUpdate[key].content = ''; // Clear for streaming effect
     }));
 
@@ -497,10 +501,46 @@ ${allDesignContent}
         setCurrentDetailedStep(prev => {
             const nextStep = prev + direction;
             if (nextStep >= 0 && nextStep < detailedArtifactKeys.length) {
-                // 如果是从倒数第二个节点进入最后一个节点(设计文档)
-                if (nextStep === detailedArtifactKeys.length - 1 && direction > 0) {
-                    // 自动触发设计文档的生成
-                    handleInitialAIGenerate('detailed', 'designDocument');
+                // 如果是从类图(倒数第二个节点)进入设计文档(最后一个节点)
+                if (nextStep === detailedArtifactKeys.length - 1 && direction > 0 && 
+                    detailedArtifactKeys[nextStep - 1] === 'classDiagram') {
+                    // 直接拼接所有内容
+                    let fullContent = '# 完整技术设计文档\n\n';
+                    
+                    // 添加设计要点
+                    if (currentDesignData.designKeyPoints) {
+                        fullContent += `## 设计要点\n${currentDesignData.designKeyPoints}\n\n`;
+                    }
+
+                    // 添加高层设计内容
+                    if (!currentDesignData.isHighLevelDesignSkipped) {
+                        fullContent += '# 高层设计\n\n';
+                        for (const hlKey in HIGH_LEVEL_DESIGN_ARTIFACTS) {
+                            if (currentDesignData.highLevelDesign[hlKey]?.content) {
+                                fullContent += `## ${HIGH_LEVEL_DESIGN_ARTIFACTS[hlKey]}\n`;
+                                fullContent += currentDesignData.highLevelDesign[hlKey].content;
+                                fullContent += '\n\n';
+                            }
+                        }
+                    }
+
+                    // 添加详细设计内容
+                    fullContent += '# 详细设计\n\n';
+                    for (const dtKey in DETAILED_DESIGN_ARTIFACTS) {
+                        if (dtKey !== 'designDocument' && currentDesignData.detailedDesign[dtKey]?.content) {
+                            fullContent += `## ${DETAILED_DESIGN_ARTIFACTS[dtKey]}\n`;
+                            fullContent += currentDesignData.detailedDesign[dtKey].content;
+                            fullContent += '\n\n';
+                        }
+                    }
+
+                    // 更新设计文档内容
+                    setDesignData(produce(currentDesignData, draft => {
+                        if (!draft.detailedDesign.designDocument) {
+                            draft.detailedDesign.designDocument = { content: '', aiAdjustmentRequest: '' };
+                        }
+                        draft.detailedDesign.designDocument.content = fullContent;
+                    }));
                 }
                 return nextStep;
             }

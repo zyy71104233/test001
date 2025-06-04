@@ -46,6 +46,7 @@ const initialArchitectDesignData = {
     deploymentDiagram: { content: '', aiAdjustmentRequest: '' },
   },
   detailedDesign: {
+    fileList: { content: '', aiAdjustmentRequest: '' },
     keySequenceDiagram: { content: '', aiAdjustmentRequest: '' },
     stateDiagram: { content: '', aiAdjustmentRequest: '' },
     dbDesign: { content: '', aiAdjustmentRequest: '' },
@@ -78,10 +79,10 @@ function App() {
 
   const next = () => {
     // Validation for PRD confirmation before moving to Step 3 (Architect)
-    if (current === 1 && !prdData.isConfirmed) {
-        message.warning('请先确认PRD，再进入技术设计阶段。');
-        return;
-    }
+    // if (current === 1 && !prdData.isConfirmed) {
+    //     message.warning('请先确认PRD，再进入技术设计阶段。');
+    //     return;
+    // }
     // Other validations (if any) can be added here following the same pattern
     // e.g., if (current === 0 && !userRequirement) { ... }
     // e.g., if (current === 2 && !architectDesign.isConfirmed) { ... }
@@ -99,10 +100,10 @@ function App() {
 
   const handleStepChange = (step) => {
     // Validation for PRD confirmation when trying to navigate to Step 3 (Architect) directly
-    if (current === 1 && step === 2 && !prdData.isConfirmed) {
-      message.warning('请先确认PRD，再进入技术设计阶段。');
-      return; // Prevent navigation
-    }
+    // if (current === 1 && step === 2 && !prdData.isConfirmed) {
+    //   message.warning('请先确认PRD，再进入技术设计阶段。');
+    //   return; // Prevent navigation
+    // }
     // Allow navigating freely to other steps if condition not met
     updateCurrentStep(step);
   };

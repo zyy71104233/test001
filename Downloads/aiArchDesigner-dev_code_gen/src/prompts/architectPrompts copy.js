@@ -17,7 +17,6 @@ const HIGH_LEVEL_DESIGN_ARTIFACT_NAMES = {
 };
 
 const DETAILED_DESIGN_ARTIFACT_NAMES = {
-  fileList: '文件列表',
   keySequenceDiagram: '关键时序图',
   stateDiagram: '状态图',
   dbDesign: '库表设计',
@@ -115,26 +114,19 @@ export const getInitialArtifactGenerationPrompt = (
       }
     };
 
-    if (targetArtifactKey === 'fileList') {
-      // 文件列表是第一个节点，不需要添加其他详细设计的上下文
-    }
-    else if (targetArtifactKey === 'stateDiagram') {
+    if (targetArtifactKey === 'stateDiagram') {
       addDldContext('keySequenceDiagram', DETAILED_DESIGN_ARTIFACT_NAMES.keySequenceDiagram);
-      addDldContext('fileList', DETAILED_DESIGN_ARTIFACT_NAMES.fileList);
     }
     else if (targetArtifactKey === 'dbDesign') {
-      addDldContext('fileList', DETAILED_DESIGN_ARTIFACT_NAMES.fileList);
       addDldContext('keySequenceDiagram', DETAILED_DESIGN_ARTIFACT_NAMES.keySequenceDiagram);
       addDldContext('stateDiagram', DETAILED_DESIGN_ARTIFACT_NAMES.stateDiagram);
     }
     else if (targetArtifactKey === 'apiDocs') {
-      addDldContext('fileList', DETAILED_DESIGN_ARTIFACT_NAMES.fileList);
       addDldContext('keySequenceDiagram', DETAILED_DESIGN_ARTIFACT_NAMES.keySequenceDiagram);
       addDldContext('stateDiagram', DETAILED_DESIGN_ARTIFACT_NAMES.stateDiagram);
       addDldContext('dbDesign', DETAILED_DESIGN_ARTIFACT_NAMES.dbDesign);
     }
     else if (targetArtifactKey === 'classDiagram') {
-      addDldContext('fileList', DETAILED_DESIGN_ARTIFACT_NAMES.fileList);
       addDldContext('keySequenceDiagram', DETAILED_DESIGN_ARTIFACT_NAMES.keySequenceDiagram);
       addDldContext('stateDiagram', DETAILED_DESIGN_ARTIFACT_NAMES.stateDiagram);
       addDldContext('dbDesign', DETAILED_DESIGN_ARTIFACT_NAMES.dbDesign);
@@ -149,14 +141,7 @@ export const getInitialArtifactGenerationPrompt = (
   let extraRequirementsString = `# 额外要求:
 - 需要输出API文档的时候,使用OpenAPI 3.0的格式进行输出，并请去掉不必要的内容。用户需要将直接复制你的内容到swagger editor进行渲染，请保证格式正确。`;
 
-  if (targetArtifactKey === 'fileList') {
-    extraRequirementsString = `# 额外要求:
-- 请生成一个完整的项目文件结构列表，包含所有必要的源代码文件、配置文件、资源文件等
-- 使用树形结构展示，每个文件/目录都应该有简短的说明
-- 确保包含前端和后端的完整文件结构
-- 对于重要的文件，添加更详细的说明
-- 使用Markdown格式，确保缩进清晰可读`;
-  } else if (targetArtifactKey === 'classDiagram') {
+  if (targetArtifactKey === 'classDiagram') {
     const apiDocsContent = getContent(currentDetailedDesignData, 'apiDocs');
     if (apiDocsContent) { // Check if apiDocsContent is not null or empty
       extraRequirementsString += `
