@@ -1,0 +1,75 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+\
+# Project Overview: AI Low-Code Platform POC
+
+This document provides an overview of the AI Low-Code Platform Proof of Concept project.
+
+## 1. Project Summary
+
+- **Name**: AI Low-Code Platform POC (ai-low-code-poc)
+- **Description**: A simple web-based Proof of Concept for an AI-assisted low-code platform.
+- **Built with**: [React](mdc:https:/reactjs.org) and [Ant Design](mdc:https:/ant.design)
+- **Package Manager**: npm (inferred from `package-lock.json`)
+
+## 2. Main Technologies
+
+- **Frontend Framework**: React (`react`, `react-dom`)
+- **UI Library**: Ant Design (`antd`)
+- **Build Toolchain**: Create React App (`react-scripts`)
+
+## 3. Project Structure
+
+The project follows a typical Create React App structure:
+
+- **`public/`**
+    - `[index.html](mdc:public/index.html)`: The main HTML page where the React application is mounted.
+- **`src/`**: Contains the main application source code.
+    - `[index.js](mdc:src/index.js)`: The JavaScript entry point for the React application. It renders the main `App` component.
+    - `[App.js](mdc:src/App.js)`: The root React component that defines the overall application layout and manages the multi-step workflow.
+    - **`components/`**: Contains reusable React components, primarily for the different steps in the application's workflow.
+        - `[Step1_UserRequirement.js](mdc:src/components/Step1_UserRequirement.js)`: Component for capturing user requirements.
+        - `[Step2_ProductManager.js](mdc:src/components/Step2_ProductManager.js)`: Component for product manager's PRD review.
+        - `[Step3_Architect.js](mdc:src/components/Step3_Architect.js)`: Component for architect's review of design documents.
+        - `[Step4_Developer.js](mdc:src/components/Step4_Developer.js)`: Component for developer's review of code snippets.
+        - `[Step5_Testing.js](mdc:src/components/Step5_Testing.js)`: Component for the testing phase.
+    - **`data/`**: Contains data files, typically mock data or static assets.
+        - `[mockData.js](mdc:src/data/mockData.js)`: Provides mock data for various parts of the application, such as initial values for steps or example code snippets.
+    - `[index.css](mdc:src/index.css)`: Global CSS styles for the application.
+- `[package.json](mdc:package.json)`: Defines project metadata, dependencies, and scripts.
+- `[README.md](mdc:README.md)`: Provides a general overview of the project.
+
+## 4. Application Workflow
+
+The application implements a multi-step process, managed by `[App.js](mdc:src/App.js)` using Ant Design's `Steps` component:
+
+1.  **用户需求 (User Requirement)**: User submits initial requirements. (Handled by `[Step1_UserRequirement.js](mdc:src/components/Step1_UserRequirement.js)`)
+2.  **需求分析 (Product Manager)**: Product Manager reviews an AI-generated Product Requirements Document (PRD). (Handled by `[Step2_ProductManager.js](mdc:src/components/Step2_ProductManager.js)`)
+3.  **技术设计 (Architect)**: Architect reviews AI-generated design documents. (Handled by `[Step3_Architect.js](mdc:src/components/Step3_Architect.js)`)
+4.  **开发实现 (Developer)**: Developer reviews AI-generated code snippets. (Handled by `[Step4_Developer.js](mdc:src/components/Step4_Developer.js)`)
+5.  **测试验证 (Testing)**: Final testing phase. (Handled by `[Step5_Testing.js](mdc:src/components/Step5_Testing.js)`)
+
+Navigation between steps is controlled, ensuring that users proceed sequentially after completing necessary actions in the current step.
+
+## 5. Key Scripts (from `package.json`)
+
+- `npm start`: Starts the development server.
+- `npm run build`: Builds the application for production.
+- `npm test`: Runs tests.
+- `npm run eject`: Ejects from Create React App's managed configuration (use with caution).
+
+## 6. Important Notes & Considerations
+
+- **State Management**: The primary state (current step, data from previous steps) is managed within `[App.js](mdc:src/App.js)` using React's `useState` hook. Data is passed down to step components via props, and child components communicate back to `App.js` using callback functions.
+- **Styling**: Global styles are in `[src/index.css](mdc:src/index.css)`. Ant Design components come with their own styling, and `antd/dist/reset.css` is imported in `[src/index.js](mdc:src/index.js)` for baseline styling.
+- **Mock Data**: The application heavily relies on `[src/data/mockData.js](mdc:src/data/mockData.js)` for initial content and examples within each step. For a production or more advanced version, this would likely be replaced with API calls or dynamic data generation.
+- **Component Structure**: Each step in the workflow has a dedicated component in the `src/components/` directory. This promotes modularity.
+- **Validation**: Basic validation is implemented in `[App.js](mdc:src/App.js)` to prevent users from moving to the next step before completing the current one (e.g., submitting user requirements before moving to PRD).
+- **AI Integration (Conceptual)**: While the project is an "AI Low-Code Platform POC," the current codebase primarily sets up the UI flow. The actual AI-generated content (PRD, design documents, code snippets) is simulated using mock data. Further development would involve integrating actual AI models or services.
+- **Directory for Rules**: This rule file itself should be located in `.cursor/rules/project-overview.mdc`.
+
+This overview should help in understanding the project's architecture and key components.
+
