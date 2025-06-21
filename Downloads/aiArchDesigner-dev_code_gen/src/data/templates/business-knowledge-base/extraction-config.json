@@ -1,0 +1,87 @@
+{
+    "version": "1.0",
+    "extraction": {
+        "businessProcess": {
+            "identifiers": {
+                "annotations": ["@businessProcess"],
+                "filePatterns": ["**/processes/**/*.ts", "**/workflows/**/*.ts"],
+                "namingPatterns": ["*Process", "*Workflow", "*Flow"]
+            },
+            "analysis": {
+                "extractSteps": true,
+                "extractRules": true,
+                "extractDependencies": true,
+                "extractErrorHandling": true
+            }
+        },
+        "businessRules": {
+            "identifiers": {
+                "annotations": ["@businessRule"],
+                "filePatterns": ["**/rules/**/*.ts", "**/validations/**/*.ts"],
+                "namingPatterns": ["*Rule", "*Validation", "*Constraint"]
+            },
+            "analysis": {
+                "extractConditions": true,
+                "extractActions": true,
+                "extractDependencies": true,
+                "extractTests": true
+            }
+        },
+        "businessComponents": {
+            "identifiers": {
+                "annotations": ["@businessComponent"],
+                "filePatterns": ["**/components/**/*.tsx"],
+                "namingPatterns": ["*Component"]
+            },
+            "analysis": {
+                "extractProps": true,
+                "extractMethods": true,
+                "extractEvents": true,
+                "extractStyles": true,
+                "extractDocs": true
+            }
+        }
+    },
+    "documentation": {
+        "templates": {
+            "process": "business-process-library.md",
+            "rule": "business-rules-library.md",
+            "component": "business-components-library.md"
+        },
+        "format": {
+            "includeExamples": true,
+            "includeDiagrams": true,
+            "includeTests": true
+        }
+    },
+    "analysis": {
+        "static": {
+            "enabled": true,
+            "includeTypes": true,
+            "includeComments": true,
+            "includeJSDoc": true
+        },
+        "dynamic": {
+            "enabled": false,
+            "traceFunctionCalls": true,
+            "traceStateChanges": true
+        }
+    },
+    "patterns": {
+        "businessLogic": [
+            "if\\s*\\([^)]*\\)\\s*{[^}]*}",
+            "switch\\s*\\([^)]*\\)\\s*{[^}]*}",
+            "\\b(validate|check|verify|ensure)\\w*\\("
+        ],
+        "dataFlow": [
+            "\\b(get|set|update|delete)\\w*\\(",
+            "\\b(transform|convert|map)\\w*\\(",
+            "\\basync\\s+function"
+        ],
+        "errorHandling": [
+            "try\\s*{[^}]*}\\s*catch",
+            "throw\\s+new\\s+\\w+",
+            "\\.catch\\s*\\("
+        ]
+    }
+} 

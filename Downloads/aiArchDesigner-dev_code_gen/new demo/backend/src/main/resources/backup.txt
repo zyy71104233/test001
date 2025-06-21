@@ -1,0 +1,172 @@
+return getCommonPromptPreamble() + """
+//
+//[Current Phase: FRONTEND CODE GENERATION]
+//Your SOLE FOCUS for this request is to generate the FRONTEND code for the application, based on the design document.
+//This typically includes: React (with TypeScript/TSX), state management, API calls to the backend, etc.
+//
+//**通用要求：**
+//*   确保生成的代码能够成功构建和运行。
+//*   遵循 React 和 TypeScript 的最佳实践。
+//*   所有文件路径和名称请准确对应。
+//
+//**前端 (React with TypeScript and react-router-dom):**
+//
+//1.  **`public/index.html`:**
+//    *   确保包含一个 `<div id="root"></div>` 作为 React 应用的挂载点。
+//    *   包含基本的 HTML 结构 (DOCTYPE, html, head, body 标签)。
+//
+//2.  **`src/index.tsx` (前端主入口文件):**
+//    *   导入 `React`, `ReactDOM` (from `react-dom/client`).
+//    *   导入 `BrowserRouter` from `react-router-dom`.
+//    *   导入主应用组件 (例如, `App` from `./App`).
+//    *   导入全局 CSS 文件 (例如, `import './index.css';`). 如果使用UI库如Ant Design，也请导入其样式 (例如 `import 'antd/dist/reset.css';`).
+//    *   使用 `ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render()` 来渲染应用，并将 `<App />` 包裹在 `<BrowserRouter>` 中。
+//        *示例:*
+//        ```tsx
+//        import React from 'react';
+//        import ReactDOM from 'react-dom/client';
+//        import {{ BrowserRouter }} from 'react-router-dom';
+//        import App from './App';
+//        import './index.css'; // 您的全局样式
+//        // import 'antd/dist/reset.css'; // 如果使用 Ant Design
+//
+//        const rootElement = document.getElementById('root');
+//        if (rootElement) {{
+//          const root = ReactDOM.createRoot(rootElement);
+//          root.render(
+//            <React.StrictMode>
+//              <BrowserRouter>
+//                <App />
+//              </BrowserRouter>
+//            </React.StrictMode>
+//          );
+//        }} else {{
+//          console.error('Failed to find the root element');
+//        }}
+//        ```
+//
+//3.  **`src/App.tsx` (前端应用根组件):**
+//    *   导入 `Routes`, `Route`, `Link` from `react-router-dom`.
+//    *   定义至少一个基本路由，例如 `/` 路径，它渲染一个简单的欢迎组件或页面。
+//    *   确保所有预期的路由都被正确注册，并且有对应的组件。
+//    *   提供基本的导航链接以便测试路由。
+//        *示例结构:*
+//        ```tsx
+//        import React from 'react';
+//        import {{ Routes, Route, Link }} from 'react-router-dom';
+//        // import {{ Layout, Menu }} from 'antd'; // 如果使用 Ant Design
+//
+//        // 示例组件 (应一并生成或创建占位符)
+//        const HomePage = () => (
+//          <div>
+//            <h2>首页</h2>
+//            <p>欢迎来到应用！</p>
+//          </div>
+//        );
+//        const AboutPage = () => <h2>关于我们</h2>;
+//
+//        function App() {{
+//          return (
+//            <div>
+//              {{/* Optional: Add Ant Design Layout if using */}}
+//              <nav style={{{{ marginBottom: '20px', padding: '10px', background: '#f0f0f0' }}}}>
+//                <Link to="/" style={{{{ marginRight: '10px' }}}}>首页</Link>
+//                <Link to="/about">关于</Link>
+//              </nav>
+//              <div style={{{{ padding: '20px' }}}}>
+//                <Routes>
+//                  <Route path="/" element={{<HomePage />}} />
+//                  <Route path="/about" element={{<AboutPage />}} />
+//                  {{/* 在此注册所有其他路由信息和对应的组件 */}}
+//                </Routes>
+//              </div>
+//            </div>
+//          );
+//        }}
+//        export default App;
+//        ```
+//
+//4.  **`src/components/` (示例组件):**
+//    *   为 `App.tsx` 中定义的路由创建简单的占位符组件 (例如, `HomePage.tsx`, `AboutPage.tsx`)，确保它们至少能渲染一些文本。
+//
+//5.  **`package.json` (前端配置文件):**
+//    *   **Dependencies**:
+//        *   `react`
+//        *   `react-dom`
+//        *   `react-router-dom`
+//        *   `typescript`
+//        *   `web-vitals` (通常由 Create React App 包含)
+//        *   (如果使用 Ant Design: `antd`)
+//    *   **DevDependencies**:
+//        *   `@types/react`
+//        *   `@types/react-dom`
+//        *   `@types/node`
+//        *   `@types/jest` (如果包含测试)
+//        *   `@types/react-router-dom`
+//        *   `react-scripts` (如果项目结构和命令依赖于 Create React App)
+//    *   **Scripts**:
+//        *   `"start": "react-scripts start"` (或针对自定义设置的等效命令, 例如 `webpack serve` 或 `vite`)
+//        *   `"build": "react-scripts build"` (或 `vite build`)
+//        *   `"test": "react-scripts test"`
+//        *   `"eject": "react-scripts eject"` (如果使用CRA)
+//    *   确保 `name` 字段有效 (例如, `my-frontend-app`).
+//    *   设置 `"private": true`.
+//    *   指定 `"browserslist"` (通常由 Create React App 默认提供).
+//
+//6.  **`tsconfig.json` (TypeScript 配置文件):**
+//    *   生成一个标准的 `tsconfig.json` 文件，适用于 React 项目。
+//        *示例:*
+//        ```json
+//        {{
+//          "compilerOptions": {{
+//            "target": "es6",
+//            "lib": ["dom", "dom.iterable", "esnext"],
+//            "allowJs": true,
+//            "skipLibCheck": true,
+//            "esModuleInterop": true,
+//            "allowSyntheticDefaultImports": true,
+//            "strict": true,
+//            "forceConsistentCasingInFileNames": true,
+//            "noFallthroughCasesInSwitch": true,
+//            "module": "esnext",
+//            "moduleResolution": "node",
+//            "resolveJsonModule": true,
+//            "isolatedModules": true,
+//            "noEmit": true,
+//            "jsx": "react-jsx"
+//          }},
+//          "include": ["src"]
+//        }}
+//        ```
+//7.  **Vite 配置 (如果使用 Vite):**
+//    *  如果设计文档或项目倾向于使用 Vite (而不是 Create React App), 生成一个 `vite.config.ts` (或 `.js`) 文件。
+//        *示例 `vite.config.ts`:*
+//        ```typescript
+//        import {{ defineConfig }} from 'vite'
+//        import react from '@vitejs/plugin-react'
+//
+//        // https://vitejs.dev/config/
+//        export default defineConfig({{
+//          plugins: [react()],
+//          server: {{ // 添加 server 配置以指定端口
+//            port: 3000, // 或其他期望的端口
+//            open: true // 自动在浏览器中打开
+//          }}
+//        }})
+//        ```
+//    *  确保 `package.json` 包含 `vite` 和 `@vitejs/plugin-react` 作为开发依赖，并且 `start` 和 `build` 脚本相应地使用 `vite` 和 `vite build`。
+//
+//- CRITICAL: 生成一个完整的 `package.json` 文件。
+//- CRITICAL: 生成一个 root HTML file (typically in a `public` directory, e.g., `public/index.html`).
+//- CRITICAL: Generate the main application entry point file (e.g., `src/index.tsx` or `src/main.tsx`).
+//- Generate a main App component (e.g., `src/App.tsx`).
+//- If using TypeScript, generate a valid `tsconfig.json`.
+//- If using Vite, generate a basic `vite.config.js` or `vite.config.ts`.
+//- DO NOT generate any backend code (Java, Spring Boot, database related files, pom.xml, etc.) in this step.
+//
+//""" + backendApiSummary + """
+//[Input Design Document Snippet - Focus on Frontend Aspects]
+//```
+//{design_document_content}
+//```
+//""" + getCommonOutputFormatAndKeyInstructions();

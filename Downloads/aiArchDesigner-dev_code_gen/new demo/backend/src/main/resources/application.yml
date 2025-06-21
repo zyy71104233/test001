@@ -1,0 +1,28 @@
+##server:
+##  port: 8080
+##spring:
+##  application:
+##    name: "memory-llama"
+##  ai:
+##    ollama:
+##      base-url: "https://api.deepseek.com"
+##      embedding:
+##        enabled: true
+##        model: deepseek-chat
+##      chat:
+##        enabled: true
+##        model: deepseek-chat
+#
+#
+#spring:
+#  application:
+#    name: ai-arch-designer-backend
+#  ai:
+#    openai:
+#      api-key: sk-10a5247e4c944fdf94b08dfb9b98c511
+#      base-url: https://api.deepseek.com
+#      chat:
+#        model: deepseek-chat
+#        enabled: true
+#        options:
+#          temperature: 0.3

@@ -3,7 +3,7 @@ export const mockData = {
   prd: {
     content: '',
     isConfirmed: false,
-  }, 
+  },
   architectDesignData: {
     uploadedRequirementsFile: null,
     designKeyPoints: '',

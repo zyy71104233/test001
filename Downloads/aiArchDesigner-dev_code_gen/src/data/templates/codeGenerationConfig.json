@@ -1,0 +1,88 @@
+{
+  "version": "1.0",
+  "projectConfig": {
+    "name": "",
+    "description": "",
+    "framework": "",
+    "language": "",
+    "dependencies": []
+  },
+  "codeGeneration": {
+    "inputDocuments": {
+      "businessRequirement": "path/to/brd.md",
+      "technicalDesign": "path/to/tdd.md"
+    },
+    "outputConfig": {
+      "baseDirectory": "src/",
+      "structure": {
+        "components": "components/",
+        "services": "services/",
+        "models": "models/",
+        "utils": "utils/"
+      }
+    },
+    "codingStandards": {
+      "naming": {
+        "components": "PascalCase",
+        "functions": "camelCase",
+        "variables": "camelCase",
+        "constants": "UPPER_SNAKE_CASE"
+      },
+      "formatting": {
+        "indentSize": 2,
+        "maxLineLength": 100,
+        "quotes": "single"
+      }
+    },
+    "documentation": {
+      "generateComments": true,
+      "includeJSDoc": true,
+      "generateReadme": true
+    },
+    "testing": {
+      "generateTests": true,
+      "framework": "jest",
+      "coverage": {
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      }
+    }
+  },
+  "qualityControl": {
+    "linting": {
+      "eslint": true,
+      "prettier": true
+    },
+    "security": {
+      "checkDependencies": true,
+      "staticAnalysis": true
+    },
+    "performance": {
+      "bundleSize": "max",
+      "loadTime": "max"
+    }
+  },
+  "aiConfig": {
+    "modelPreferences": {
+      "codeGeneration": "advanced",
+      "documentation": "detailed",
+      "testing": "comprehensive"
+    },
+    "contextWindow": {
+      "includeRelatedFiles": true,
+      "maxFiles": 10,
+      "maxTokens": 8000
+    },
+    "generationStrategy": {
+      "iterative": true,
+      "reviewSteps": [
+        "syntax",
+        "logic",
+        "security",
+        "performance"
+      ]
+    }
+  }
+} 
